@@ -4,8 +4,6 @@ Objectif du TP : instrumenter l'application Minimal API (`src/`). Vous allez :
 
 1. Construire et exécuter l'image "baseline" (sans instrumentation)
 2. Construire et exécuter une image instrumentée automatiquement (zero code)
-3. (Optionnel) Rediriger la télémétrie vers un Collector externe
-
 ---
 ## 1. Pré‑requis
 
