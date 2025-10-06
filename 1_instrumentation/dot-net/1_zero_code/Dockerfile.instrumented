@@ -1,0 +1,17 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0
+
+WORKDIR /src
+EXPOSE 8080
+
+# Copier le projet et restaurer
+COPY src/*.csproj .
+RUN dotnet restore
+
+# Copier le code et construire
+COPY src/. .
+RUN dotnet build
+
+# Ajouter l'instrumentation Zero code
+
+# Entrypoint: lancer directement l'appli (profiler déjà actif via ENV)
+CMD ["dotnet", "run"]
