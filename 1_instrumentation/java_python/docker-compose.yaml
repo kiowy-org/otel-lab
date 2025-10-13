@@ -7,6 +7,32 @@ services:
       context: python #change to java if you want to build java
     ports:
       - "8080:8080"
+    command: ["opentelemetry-instrument", "python", "app.py"]
+    environment:
+    - OTEL_SERVICE_NAME=myapp-python
+    - OTEL_TRACES_EXPORTER=otlp
+    - OTEL_METRICS_EXPORTER=otlp
+    - OTEL_LOGS_EXPORTER=console
+    - OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
+    - OTEL_PYTHON_LOG_CORRELATION=true
+    - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+
+  myappjava:
+    restart: always
+    build:
+      context: java #change to java if you want to build java
+    ports:
+      - "8081:8080"
+    command: []
+    environment:
+    - JAVA_TOOL_OPTIONS="-javaagent:/opentelemetry-javaagent.jar"
+    - OTEL_SERVICE_NAME=myapp-java
+    - OTEL_TRACES_EXPORTER=otlp
+    - OTEL_METRICS_EXPORTER=otlp
+    - OTEL_LOGS_EXPORTER=console
+    - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+    - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+
 
   # Jaeger
   jaeger-all-in-one:
